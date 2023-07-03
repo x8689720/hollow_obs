@@ -106,11 +106,10 @@ function script_update(settings)
     jitter_range = obs.obs_data_get_int(settings, "jitter_range")
     jitter_enable = obs.obs_data_get_bool(settings, "jitter_enable")
 
-  	if jitter_enable then
+	if jitter_enable then
         obs.timer_add(jitter_main, math.ceil(1000 / game_fps))
-  	else
+	else
         obs.timer_remove(jitter_main)
-  	end
+	end
 end
-
 
