@@ -1,2 +1,2 @@
 # hollow_obs
-obs-studio script for apex legends
+obs-studio script lets you jitter aim like hollow
