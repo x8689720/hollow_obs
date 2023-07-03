@@ -67,12 +67,12 @@ end
 
 function jitter_main()
     hwnd = ffi.C.FindWindowA(nil, "Apex Legends")
-	if jitter_enable and hwnd and WinActive(hwnd) and not IsCursorShowing() then
+    if jitter_enable and hwnd and WinActive(hwnd) and not IsCursorShowing() then
         if bit.band(ffi.C.GetAsyncKeyState(0x01), 0x8000) > 0 and bit.band(ffi.C.GetAsyncKeyState(0x02), 0x8000) > 0 then
             ffi.C.mouse_event(0x0001, invert*jitter_range, invert*jitter_range, 0, 0)
             invert = invert * -1
         end
-	end
+    end
 end
 
 function script_description()
@@ -108,9 +108,9 @@ function script_update(settings)
 
     obs.timer_remove(jitter_main)
 
-	if jitter_enable then
+    if jitter_enable then
         obs.timer_add(jitter_main, math.ceil(1000 / game_fps))
-	else
+    else
         obs.timer_remove(jitter_main)
-	end
+    end
 end
