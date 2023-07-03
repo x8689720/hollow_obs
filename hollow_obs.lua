@@ -67,12 +67,12 @@ end
 
 function jitter_main()
     hwnd = ffi.C.FindWindowA(nil, "Apex Legends")
-    if jitter_enable and hwnd and WinActive(hwnd) and not IsCursorShowing() then
+	if jitter_enable and hwnd and WinActive(hwnd) and not IsCursorShowing() then
         if bit.band(ffi.C.GetAsyncKeyState(0x01), 0x8000) > 0 and bit.band(ffi.C.GetAsyncKeyState(0x02), 0x8000) > 0 then
             ffi.C.mouse_event(0x0001, invert*jitter_range, invert*jitter_range, 0, 0)
             invert = invert * -1
         end
-    end
+	end
 end
 
 function script_description()
@@ -89,8 +89,8 @@ end
 
 function script_properties()
     local props = obs.obs_properties_create()
-    obs.obs_properties_add_int_slider(props, "game_fps", "Game FPS", 0, 299, 1)
-    obs.obs_properties_add_int_slider(props, "jitter_range", "Range", 0, 100, 1)
+    obs.obs_properties_add_int_slider(props, "game_fps", "Game FPS", 1, 299, 1)
+    obs.obs_properties_add_int_slider(props, "jitter_range", "Range", 1, 100, 1)
     obs.obs_properties_add_bool(props,"jitter_enable", "Enabled")
     return props
 end
@@ -106,10 +106,11 @@ function script_update(settings)
     jitter_range = obs.obs_data_get_int(settings, "jitter_range")
     jitter_enable = obs.obs_data_get_bool(settings, "jitter_enable")
 
-    if jitter_enable then
-        obs.timer_add(jitter_main, math.ceil(1000 / game_fps))
-    else
-        obs.timer_remove(jitter_main)
-    end
-end
+    obs.timer_remove(jitter_main)
 
+	if jitter_enable then
+        obs.timer_add(jitter_main, math.ceil(1000 / game_fps))
+	else
+        obs.timer_remove(jitter_main)
+	end
+end
